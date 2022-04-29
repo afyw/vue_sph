@@ -7,6 +7,8 @@ Vue.component(TypeNav.name,TypeNav)
 // 引入路由
 import router from '@/router'
 Vue.config.productionTip = false
+// 引入仓库
+import store from '@/store'
 // 测试
 import {reqCategoryList} from '@/api';
 reqCategoryList();
@@ -15,5 +17,7 @@ new Vue({
   render: h => h(App),
 //注册路由：写法为KV一致省略V
 //注册路由信息：组件身上都会拥有$route,$router属性
-router
+router,
+// 注册仓库:组件实例的身上会多一个$store属性
+store
 }).$mount('#app')
