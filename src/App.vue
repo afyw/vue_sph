@@ -1,26 +1,28 @@
 <template>
   <div id="app">
-      <Header></Header>
-      <!-- 路由组件出口得地方 -->
-      <router-view></router-view>
-      <!-- 在Home、Search显示，在登录、注册隐藏 -->
-      <Footer v-show="$route.meta.show"></Footer>
+    <Header></Header>
+    <!-- 路由组件出口得地方 -->
+    <router-view></router-view>
+    <!-- 在Home、Search显示，在登录、注册隐藏 -->
+    <Footer v-show="$route.meta.show"></Footer>
   </div>
 </template>
 
 <script>
 // 引入
-import Header from './components/Header'
-import Footer from './components/Footer'
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-      Header,
-      Footer
-  }
-}
+    Header,
+    Footer,
+  },
+  mounted() {
+    // 通知Vuex发请求，获取商品分类三级列表
+    this.$store.dispatch("categoryList");
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

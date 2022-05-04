@@ -20,10 +20,7 @@ let originReplace = VueRouter.prototype.replace;
 VueRouter.prototype.push = function (location, resolve, reject) {
   if (resolve && reject) {
     originPush.call(this, location, resolve, reject);
-    console.log(this);
   } else {
-    console.log(this);
-
     originPush.call(
       this,
       location,
