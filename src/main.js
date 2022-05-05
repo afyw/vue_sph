@@ -2,8 +2,10 @@ import Vue from "vue";
 import App from "./App.vue";
 // 三级联动组件---全局组件
 import TypeNav from "@/components/TypeNav";
+import Carsousel from '@/components/Carousel'
 // 参数：1.全局组件的名字 第二个参数：哪个组件
 Vue.component(TypeNav.name, TypeNav);
+Vue.component(Carsousel.name,Carsousel);
 // 引入MockServer.js---mock数据
 import '@/mock/mockServe';
 

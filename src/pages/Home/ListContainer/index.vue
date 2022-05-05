@@ -3,23 +3,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" ref="mySwiper">
-          <div class="swiper-wrapper">
-            <div
-              class="swiper-slide"
-              v-for="(carousel) in bannerList"
-              :key="carousel.id"
-            >
-              <img :src="carousel.imgUrl" />
-            </div>
-          </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
-
-          <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
+        <Carsouel :list="bannerList" />
       </div>
       <div class="right">
         <div class="news">
@@ -110,34 +94,7 @@ export default {
       bannerList: (state) => state.home.bannerList,
     }),
   },
-  watch: {
-    //监听bannnerList数据的变化
-    bannerList: {
-      handler(newValue, oldValue) {
-        //现在通过watch监听bannerList属性变化
-        // v-for执行完毕结构才完成
-        // nextTick：在下次Dom更新 循环结束之后 执行延迟回调。在修改数据之后 立即使用这个方法 获取更新后的dom
-        this.$nextTick(() => {
-          var mySwiper = new Swiper(this.$refs.mySwiper, {
-            loop: true, // 循环模式选项
-
-            // 如果需要分页器
-            pagination: {
-              el: ".swiper-pagination",
-              // 点击小球可切换
-              clickable: true,
-            },
-
-            // 如果需要前进后退按钮
-            navigation: {
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
-            },
-          });
-        });
-      },
-    },
-  },
+ 
 };
 </script>
 
