@@ -39,28 +39,34 @@
         <!--selector-->
         <SearchSelector @trademarkInfo="trademarkInfo" @attrInfo="attrInfo" />
 
-        <!--details-->
+        <!--排序结构-->
         <div class="details clearfix">
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li :class="{ active: isOne }" @click="changeOrder(1)">
+                  <a
+                    >综合<span
+                      v-show="isOne"
+                      class="iconfont"
+                      :class="{
+                        'icon-long-arrow-up': isAsc,
+                        'icon-long-arrow-down': isDesc,
+                      }"
+                    ></span
+                  ></a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
-                </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li :class="{ active: isTwo }" @click="changeOrder(2)">
+                  <a
+                    >价格<span
+                      v-show="isTwo"
+                      class="iconfont"
+                      :class="{
+                        'icon-long-arrow-up': isAsc,
+                        'icon-long-arrow-down': isDesc,
+                      }"
+                    ></span
+                  ></a>
                 </li>
               </ul>
             </div>
@@ -166,7 +172,7 @@ export default {
         // 关键字
         keyword: "",
         // 排序
-        order: "",
+        order: "1:asc",
         // 分页器参数：代表当前是第几页
         pageNo: 1,
         // 代表的没一个展示数据个数
@@ -195,6 +201,18 @@ export default {
   computed: {
     // mapGetters里面的写法：传递的数组，因为getters计算没用划分模块
     ...mapGetters(["goodsList"]),
+    isOne() {
+      return this.searchParams.order.indexOf("1") != -1;
+    },
+    isTwo() {
+      return this.searchParams.order.indexOf("2") != -1;
+    },
+    isAsc() {
+      return this.searchParams.order.indexOf("asc") != -1;
+    },
+    isDesc() {
+      return this.searchParams.order.indexOf("desc") != -1;
+    },
   },
   methods: {
     // 向服务器发送请求获取search模块数据
@@ -256,8 +274,27 @@ export default {
     },
     // 删除
     removeAttr(index) {
-        this.searchParams.props.splice(index,1)
-        this.getData()
+      this.searchParams.props.splice(index, 1);
+      this.getData();
+    },
+    // 排序的操作
+    changeOrder(flag) {
+        // flag形参代表目前所处状态
+        let originOrder = this.searchParams.order
+        // 这里获取到的是最开始的状态
+        let originFlag = this.searchParams.order.split(":")[0];
+        let originSort = this.searchParams.order.split(":")[1];
+        console.log(originFlag,originSort)
+        // 准备一个新的order属性值
+        let newOrder ='';
+        if(flag== originFlag) {
+            newOrder = `${originFlag}:${originSort=="desc" ? "asc" :"desc"}`
+        }else{
+            // 点击价格
+            newOrder = `${flag}:${'desc'}`
+        }
+        this.searchParams.order = newOrder
+        this.getData();
     }
   },
   watch: {
@@ -607,6 +644,13 @@ export default {
         }
       }
     }
+  }
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 12px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 </style>
