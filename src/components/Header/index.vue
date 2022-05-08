@@ -64,7 +64,7 @@ export default {
   methods: {
     //   搜索按钮的回调函数：向search路由进行跳转
     goSearch() {
-    //   搜索按钮的事件处理函数，用于跳转到search路由组件当中
+      //   搜索按钮的事件处理函数，用于跳转到search路由组件当中
       if (this.$route.query) {
         let location = {
           name: "search",
@@ -72,9 +72,15 @@ export default {
         };
         location.query = this.$route.query;
         this.$router.push(location);
-        console.log(location)
+        console.log(location);
       }
     },
+  },
+  mounted() {
+    //通过全局事件总线清除关键字
+    this.$bus.$on("clear",()=>{
+        this.Keyword = '';
+    })
   },
 };
 </script>

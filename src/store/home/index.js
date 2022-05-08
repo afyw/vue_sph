@@ -11,7 +11,6 @@ const state = {
 const mutations = {
   CATEGORYLIST(state, categoryList) {
     state.categoryList = categoryList;
-    console.log(state.categoryList);
   },
   GETBANNERLIST(state, bannerList) {
     state.bannerList = bannerList;
@@ -37,6 +36,10 @@ const actions = {
   },
 
   // 获取floor数据
+  /* 
+  Action 函数接受一个与 store 实例具有相同方法和属性的 context 对象，
+  因此你可以调用 context.commit 提交一个 mutation，此处是解构赋值
+   */
   async getFloorList({ commit }) {
     let res = await reqFloorList();
     if (res.code == 200) {

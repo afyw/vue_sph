@@ -118,7 +118,6 @@ export default {
 
       // 1:把子节点当中a标签加上自定义属性data-categoryName
       let element = e.target;
-      console.log(element);
       // 获取当前触发这个事件的节点
       // 节点有一个属性dataset，可以获取节点的自定义属性与属性值
       let { categoryname, category1id, category2id, category3id } =
@@ -140,7 +139,6 @@ export default {
         if (this.$route.params) {
           location.params = this.$route.params;
           location.query = query;
-          console.log(location);
           // 路由跳转
           this.$router.push(location);
         }

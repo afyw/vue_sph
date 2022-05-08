@@ -16,8 +16,13 @@ Vue.config.productionTip = false;
 import store from "@/store";
 // 引入swiper样式
 import "swiper/css/swiper.css"
-new Vue({
+import {reqGetSearchInfo} from "@/api"
+console.log(reqGetSearchInfo({}))
+new Vue({   
   render: (h) => h(App),
+  beforeCreate() {
+      Vue.prototype.$bus = this;
+  },
   //注册路由：写法为KV一致省略V
   //注册路由信息：组件身上都会拥有$route,$router属性
   router,
