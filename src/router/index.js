@@ -1,13 +1,11 @@
 // 配置路由处
 import Vue from "vue";
 import VueRouter from "vue-router";
+import routes from "./routes";
 // 使用插件
 Vue.use(VueRouter);
 // 引入路由组件
-import Home from "@/pages/Home";
-import Search from "@/pages/Search";
-import Register from "@/pages/Register";
-import Login from "@/pages/Login";
+
 // 先把VueRouter原型对象的push保存一份
 let originPush = VueRouter.prototype.push;
 let originReplace = VueRouter.prototype.replace;
@@ -41,36 +39,11 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
     );
   }
 };
-// 配置路由
+// 对外暴露vueRouter实例
 export default new VueRouter({
-  // 配置路由
-  routes: [
-    // 重定向
-    {
-      path: "*",
-      redirect: "/home",
-    },
-    {
-      path: "/home",
-      component: Home,
-      // 路由源信息
-      meta: { show: true },
-    },
-    {
-      path: "/search/:Keyword?",
-      component: Search,
-      meta: { show: true },
-      name: "search",
-    },
-    {
-      path: "/Login",
-      component: Login,
-      meta: false,
-    },
-    {
-      path: "/Register",
-      component: Register,
-      meta: false,
-    },
-  ],
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    // return 期望滚动到哪个的位置
+    return { x: 0, y: 0 };
+  },
 });

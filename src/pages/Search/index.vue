@@ -77,9 +77,10 @@
               <li class="yui3-u-1-5" v-for="good in goodsList" :key="good.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank">
-                      <img :src="good.defaultImg"
-                    /></a>
+                      <!-- 在路由跳转的时候携带参数id(params参数) -->
+                    <router-link :to="`/detail/${good.id}`">
+                      <img :src="good.defaultImg" />
+                    </router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -114,7 +115,13 @@
             </ul>
           </div>
           <!-- 分页器 -->
-        <Pagination :pageNo="searchParams.pageNo" :pageSize="searchParams.pageSize" :total="91" continues="5" @getPageNo="getPageNo"/>
+          <Pagination
+            :pageNo="searchParams.pageNo"
+            :pageSize="searchParams.pageSize"
+            :total="91"
+            continues="5"
+            @getPageNo="getPageNo"
+          />
         </div>
       </div>
     </div>
@@ -123,7 +130,7 @@
 
 <script>
 import SearchSelector from "./SearchSelector/SearchSelector";
-import { mapGetters,mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "Search",
   components: {
@@ -144,7 +151,7 @@ export default {
         // 关键字
         keyword: "",
         // 排序
-        order: "1:asc",
+        order: "1:desc",
         // 分页器参数：代表当前是第几页
         pageNo: 1,
         // 代表的没一个展示数据个数
@@ -187,8 +194,8 @@ export default {
     },
     // 获取search模块展示数据的总条数
     ...mapState({
-        total:state=>state.search.searchList.total
-    })
+      total: (state) => state.search.searchList.total,
+    }),
   },
   methods: {
     // 向服务器发送请求获取search模块数据
@@ -255,30 +262,30 @@ export default {
     },
     // 排序的操作
     changeOrder(flag) {
-        // flag形参代表目前所处状态
-        let originOrder = this.searchParams.order
-        // 这里获取到的是最开始的状态
-        let originFlag = this.searchParams.order.split(":")[0];
-        let originSort = this.searchParams.order.split(":")[1];
-        console.log(originFlag,originSort)
-        // 准备一个新的order属性值
-        let newOrder ='';
-        if(flag== originFlag) {
-            newOrder = `${originFlag}:${originSort=="desc" ? "asc" :"desc"}`
-        }else{
-            // 点击价格
-            newOrder = `${flag}:${'desc'}`
-        }
-        this.searchParams.order = newOrder
-        this.getData();
+      // flag形参代表目前所处状态
+      let originOrder = this.searchParams.order;
+      // 这里获取到的是最开始的状态
+      let originFlag = this.searchParams.order.split(":")[0];
+      let originSort = this.searchParams.order.split(":")[1];
+      console.log(originFlag, originSort);
+      // 准备一个新的order属性值
+      let newOrder = "";
+      if (flag == originFlag) {
+        newOrder = `${originFlag}:${originSort == "desc" ? "asc" : "desc"}`;
+      } else {
+        // 点击价格
+        newOrder = `${flag}:${"desc"}`;
+      }
+      this.searchParams.order = newOrder;
+      this.getData();
     },
     // 自定义事件--获取当前第几页
     getPageNo(pageNo) {
-        // 整理带给服务器的数据
-        this.searchParams.pageNo= pageNo;
-        // 再次发请求
-        this.getData();
-    }
+      // 整理带给服务器的数据
+      this.searchParams.pageNo = pageNo;
+      // 再次发请求
+      this.getData();
+    },
   },
   watch: {
     //监听路由信息是否发生变化，如果发生变化，再次发起请求
