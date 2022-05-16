@@ -6,7 +6,7 @@
     <Rank />
     <Like />
     <!-- Floor组件没用发请求，数据是父组件给的 -->
-    <Floor v-for="(floor) in floorList" :key="floor.id" :list="floor"/>
+    <Floor v-for="floor in floorList" :key="floor.id" :list="floor" />
     <Brand />
   </div>
 </template>
@@ -31,6 +31,8 @@ export default {
   mounted() {
     // 派发floor的action
     this.$store.dispatch("getFloorList");
+    // 获取用户信息首页展示
+    this.$store.dispatch("getUserInfo");
   },
   computed: {
     ...mapState({
