@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+      <h1 v-upper="msg"></h1>
     <Header></Header>
     <!-- 路由组件出口得地方 -->
     <router-view></router-view>
@@ -17,6 +18,11 @@ export default {
   components: {
     Header,
     Footer,
+  },
+  data(){
+      return {
+          msg:'欢迎'
+      }
   },
   mounted() {
     // 通知Vuex发请求，获取商品分类三级列表

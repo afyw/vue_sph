@@ -1,6 +1,5 @@
 <template>
   <div class="pagination">
-    <h1>{{ scopeNum.end }}---当前页码{{ pageNo }}</h1>
     <button :disabled="pageNo == 1" @click="$emit('getPageNo', pageNo - 1)">
       上一页
     </button>

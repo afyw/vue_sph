@@ -63,7 +63,7 @@
         <input
           class="chooseAll"
           type="checkbox"
-          :checked="isAllChecked&&cartInfoList.length > 0"
+          :checked="isAllChecked && cartInfoList.length > 0"
           @click="updateAllCartChecked"
         />
         <span>全选</span>
@@ -80,7 +80,7 @@
           <i class="summoney">{{ totalPrice }}</i>
         </div>
         <div class="sumbtn">
-          <a class="sum-btn" href="###" target="_blank">结算</a>
+          <router-link class="sum-btn" to="/trade">结算</router-link>
         </div>
       </div>
     </div>
@@ -176,7 +176,9 @@ export default {
         //   派发action
         await this.$store.dispatch("updateAllCartIsChecked", isChecked);
         this.getData();
-      } catch (error) {alert(error.message)}
+      } catch (error) {
+        alert(error.message);
+      }
     },
   },
   computed: {
